@@ -7,6 +7,7 @@ import https from "https";
 
 function buildSqlQuerySafe() {
   // Parameterized queries should be used via a database library
+  //sample comment
   return "SELECT * FROM users WHERE username = ?";
 }
 
