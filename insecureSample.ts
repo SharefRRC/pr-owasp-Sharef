@@ -1,34 +1,36 @@
-// insecureSample.ts (intentionally vulnerable for OWASP review practice)
+// secureSample.ts (issues addressed based on PR review)
 
-import http from "http";
+import https from "https";
 
-const DB_PASSWORD = "superSecret123"; /
-const API_KEY = "abcd-1234-XYZ";      
+// Secrets removed from source code
+// In real applications, use environment variables or secret managers
 
-function buildSqlQuery(username: string) {
- 
-  return `SELECT * FROM users WHERE username = '${username}'`;
+function buildSqlQuerySafe() {
+  // Parameterized queries should be used via a database library
+  return "SELECT * FROM users WHERE username = ?";
 }
 
-function runUserCode(code: string) {
-
-  return eval(code);
+// Removed eval to prevent code injection
+function runSafeOperation() {
+  console.log("Running safe operation");
 }
 
-function fetchData() {
-
-  http.get("http://example.com/data", (res) => {
-    res.on("data", (chunk) => console.log(chunk.toString()));
+function fetchDataSecure() {
+  // Use HTTPS to protect data in transit
+  https.get("https://example.com/data", (res) => {
+    res.on("data", () => {
+      // Avoid logging response body
+    });
   });
 }
 
-function logSensitive(userEmail: string) {
- 
-  console.log("User email is:", userEmail);
+function logSafeEvent() {
+  // Avoid logging sensitive user data
+  console.log("User action recorded");
 }
 
 const userInput = process.argv[2] || "guest";
-console.log(buildSqlQuery(userInput));
-runUserCode("console.log('running user code')"); 
-fetchData();
-logSensitive("admin@example.com");
+console.log(buildSqlQuerySafe());
+runSafeOperation();
+fetchDataSecure();
+logSafeEvent();
